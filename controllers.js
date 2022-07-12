@@ -1,7 +1,6 @@
 const { sequelize, Sequelize } = require("sequelize");
 const db = require("./dbSetup");
 
-
 const Users = require("./users")(db.sequelize, Sequelize);
 
 const login = async (req, res, next) => {
@@ -70,7 +69,6 @@ const verify = async (req, res, next) => {
       message: "Thank you, enjoy your coffee!",
       emoji: "(=^ェ^=)",
     });
-
   } else if (!userDetails.second_cup) {
     const update = await userDetails.update(
       {
@@ -87,16 +85,13 @@ const verify = async (req, res, next) => {
     });
   } else {
     return res.status(400).send({
-      message : "Its get-your-wallet-out time",
-      emoji : "¯\_(ツ)_/¯"
+      message: "Its get-your-wallet-out time",
+      emoji: "¯_(ツ)_/¯",
     });
   }
 };
 
-
-
 module.exports = {
   login,
   verify,
-
 };

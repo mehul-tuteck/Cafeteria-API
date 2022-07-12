@@ -46,7 +46,7 @@ cron.schedule("* 0 23 * * *", async () => {
   }
 });
 
-//Running another script everyday at 7:30PM to send a mail to Aritra Da on weekdays.
+//Running another script everyday at 7:30 PM to send a mail to Aritra Da on weekdays.
 cron.schedule("* 30 19 * * 1-5", async () => {
   transporter.sendMail(mailOptions, (error, response) => {
     if (error) {
