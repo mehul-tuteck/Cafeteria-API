@@ -15,8 +15,10 @@
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "mysql2": "^2.3.3",
+    "node-xlsx": "^0.21.0",
     "nodemon": "^2.0.19",
     "sequelize": "^6.21.2",
-    "sequelize-automate": "^1.2.2"
+    "sequelize-automate": "^1.2.2",
+    "xlsx": "^0.18.5"
   }
 }
