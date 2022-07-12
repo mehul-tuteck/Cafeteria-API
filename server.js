@@ -11,8 +11,9 @@ const { transporter, mailOptions } = require('./mailConfig.js');
 
 const sid = process.env.SID;
 const token = process.env.TOKEN;
+const from = process.env.FROM;
 
-const client = require('twilio')(process.env.SID, process.env.TOKEN);
+const client = require('twilio')(sid, token);
 
 const app = express();
 app.use(router);
@@ -43,7 +44,7 @@ cron.schedule('* 0 23 * * *', async () => {
     client.messages.create({
       body: `DB update failed with ${error.message}`,
       to: '+917980996735',
-      from: process.env.FROM,
+      from,
     });
   }
 });
@@ -55,7 +56,7 @@ cron.schedule('* 30 19 * * 1-5', async () => {
       client.messages.create({
         body: `Mailing failed to Aritra with ${error}`,
         to: '+917980996735',
-        from: process.env.FROM,
+        from,
       });
     }
   });
