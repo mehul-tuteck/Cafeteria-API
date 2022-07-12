@@ -2,7 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const cron = require('node-cron');
 const { sequelize, Sequelize } = require('sequelize');
-const nodemailer = require('nodemailer');
 
 const db = require('./dbSetup');
 const Users = require('./users')(db.sequelize, Sequelize);
@@ -13,7 +12,10 @@ const sid = process.env.SID;
 const token = process.env.TOKEN;
 const from = process.env.FROM;
 
-const client = require('twilio')(sid, token);
+const client = require('twilio')(
+  'ACa8ed8b0032c38e0d0417286903ea27ad',
+  'f56ff014b200c54de19bc8c838209e95'
+);
 
 const app = express();
 app.use(router);
