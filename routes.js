@@ -3,8 +3,9 @@ const router = express.Router();
 
 const {
     login,
-    verify
+    verify,
 } = require("./controllers")
 
 router.route("/login").post(login);
 router.route("/verify").post(verify)
+

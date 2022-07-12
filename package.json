@@ -10,15 +10,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.1",
+   "dotenv": "^16.0.1",
     "express": "^4.18.1",
+    "mariadb": "^3.0.0",
     "mysql2": "^2.3.3",
-    "node-xlsx": "^0.21.0",
+    "node-cron": "^3.0.1",
+    "nodemailer": "^6.7.7",
     "nodemon": "^2.0.19",
     "sequelize": "^6.21.2",
     "sequelize-automate": "^1.2.2",
+    "twilio": "^3.78.0",
     "xlsx": "^0.18.5"
   }
 }

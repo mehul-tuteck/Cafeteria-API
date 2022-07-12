@@ -1,20 +1,8 @@
-const Users = require('./users');
-const reader = require('xlsx');
+const { sequelize, Sequelize } = require("sequelize");
+const db = require("./dbSetup");
 
-const readFile = () => {
-  const file = reader.readFile('./Cafeteria.xlsx');
-  let data = [];
-  const sheets = file.SheetNames;
 
-  for (let i = 0; i < sheets.length; i++) {
-    const temp = reader.utils.sheet_to_json(file.Sheets[file.SheetNames[i]]);
-    temp.forEach((res) => {
-      data.push(res);
-    });
-  }
-
-  console.log(data);
-};
+const Users = require("./users")(db.sequelize, Sequelize);
 
 const login = async (req, res, next) => {
   const { phoneNumber, password } = req.body;
@@ -26,7 +14,7 @@ const login = async (req, res, next) => {
   if (!userExists) {
     return res
       .status(404)
-      .send('Please enter your phone number correctly (ง’̀-‘́)ง');
+      .send("Please enter your phone number correctly (ง’̀-‘́)ง");
   }
 
   const userDetails = await Users.findOne({
@@ -34,34 +22,31 @@ const login = async (req, res, next) => {
   });
 
   if (!userDetails) {
-    return res
-      .status(400)
-      .send(
-        'The password you entered was incorrect, please enter the correct password ʕ •ᴥ•ʔ'
-      );
+    return res.status(400).send({
+      message:
+        "The password or phone number you entered was incorrect, please check your details",
+      emoji: "ʕ •ᴥ•ʔ",
+    });
   }
 
   if (!userDetails.first_cup) {
-    return res
-      .status(200)
-      .send(
-        `Hi ${userDetails.first_name}, would you like to have your first cup for the day? (✿◠‿◠)`
-      );
+    return res.status(200).send({
+      message: `Hi ${userDetails.first_name}, would you like to have your first cup of coffee?`,
+      emoji: "(✿◠‿◠)",
+    });
   }
 
   if (!userDetails.second_cup) {
-    return res
-      .status(200)
-      .send(
-        `Welcome back, ${userDetails.first_name}, would you like to have your second cup for the day? (｡◕‿◕｡)`
-      );
+    return res.status(200).send({
+      message: `Welcome back, ${userDetails.first_name}, would you like to have your second cup for the day?`,
+      emoji: "(｡◕‿◕｡)",
+    });
   }
 
-  return res
-    .status(400)
-    .send(
-      `Sorry ${userDetails.first_name}, you have had your two free cups for the day (ಠ_ಠ)`
-    );
+  return res.status(400).send({
+    message: `Sorry ${userDetails.first_name}, you have had your two free cups for the day`,
+    emoji: "(ಠ_ಠ)",
+  });
 };
 
 const verify = async (req, res, next) => {
@@ -72,29 +57,46 @@ const verify = async (req, res, next) => {
   });
 
   if (!userDetails.first_cup) {
-    const update = await userDetails.update({
-      first_cup: 1,
-      where: { phone_number: phoneNumber },
-    });
+    const update = await userDetails.update(
+      {
+        first_cup: 1,
+      },
+      { where: { phone_number: phoneNumber } }
+    );
 
     console.log(update);
 
-    return res.status(200).send('1ta baaki');
+    return res.status(200).send({
+      message: "Thank you, enjoy your coffee!",
+      emoji: "(=^ェ^=)",
+    });
+
   } else if (!userDetails.second_cup) {
-    const update = await userDetails.update({
-      second_cup: 1,
-      where: { phone_number: phoneNumber },
-    });
+    const update = await userDetails.update(
+      {
+        second_cup: 1,
+      },
+      { where: { phone_number: phoneNumber } }
+    );
 
     console.log(update);
 
-    return res.status(200).send('ses');
+    return res.status(200).send({
+      message: "Thank you, enjoy your coffee!",
+      emoji: "(=^ェ^=)",
+    });
   } else {
-    return res.status(400).send('Onek hoyeche, kine khao');
+    return res.status(400).send({
+      message : "Its get-your-wallet-out time",
+      emoji : "¯\_(ツ)_/¯"
+    });
   }
 };
+
+
 
 module.exports = {
   login,
   verify,
+
 };

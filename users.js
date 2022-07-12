@@ -2,7 +2,7 @@ const {
   DataTypes
 } = require('sequelize');
 
-module.exports = sequelize => {
+module.exports =  sequelize => {
   const attributes = {
     id: {
       type: DataTypes.BIGINT,
@@ -13,7 +13,7 @@ module.exports = sequelize => {
       comment: null,
       field: "id"
     },
-    first_name: {
+    name: {
       type: DataTypes.STRING(100),
       allowNull: true,
       defaultValue: null,
@@ -21,15 +21,6 @@ module.exports = sequelize => {
       autoIncrement: false,
       comment: null,
       field: "first_name"
-    },
-    last_name: {
-      type: DataTypes.STRING(100),
-      allowNull: true,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: null,
-      field: "last_name"
     },
     first_cup: {
       type: DataTypes.INTEGER(1),
