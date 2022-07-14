@@ -2,33 +2,33 @@ const User = require('./User');
 const jwt = require('jsonwebtoken');
 
 const login = async (req, res, next) => {
-  const { phoneNumber, password } = req.body;
+  const { email, password } = req.body;
 
   const userExists = await User.findOne({
-    phoneNumber,
+    email,
   });
 
   if (!userExists) {
     return res.status(404).send({
-      message: 'Please enter your phone number correctly',
+      message: 'Please enter your email correctly',
       emoji: '(ง’̀-‘́)ง',
     });
   }
   const userDetails = await User.findOne({
-    phoneNumber,
+    email,
     password,
   });
 
   if (!userDetails) {
     return res.status(400).send({
       message:
-        'The password or phone number you entered was incorrect, please check your details',
+        'The password or email you entered was incorrect, please check your details',
       emoji: 'ʕ •ᴥ•ʔ',
     });
   }
 
   const token = jwt.sign(
-    userDetails.phoneNumber,
+    userDetails.email,
     userDetails.password,
     'tuteck-caf',
     { expiresIn: '400d' }
@@ -42,20 +42,20 @@ const login = async (req, res, next) => {
 };
 
 const verify = async (req, res, next) => {
-  const phoneNumber = req.phoneNumber;
+  const email = req.email;
   let response;
 
   try {
-    const updateUser = await User.findOne({ phoneNumber });
+    const updateUser = await User.findOne({ email });
     if (!updateUser.coffeeCup_1) {
-      response = await User.updateOne({ phoneNumber }, { coffeeCup_1: true });
+      response = await User.updateOne({ email }, { coffeeCup_1: true });
       return res.status(200).send({
         message: 'Thanks for ordering your first cup for the day',
         emoji: '(ᵔᴥᵔ)',
         response,
       });
     } else if (!updateUser.coffeeCup_2) {
-      response = await User.updateOne({ phoneNumber }, { coffeeCup_2: true });
+      response = await User.updateOne({ email }, { coffeeCup_2: true });
       return res.status(200).send({
         message: 'Thanks for ordering your second cup for the day',
         emoji: '(ᵔᴥᵔ)',
