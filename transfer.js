@@ -16,7 +16,7 @@ for (let i = 0; i < sheets.length; i++) {
   });
 }
 
-// console.log(data);
+console.log(data);
 
 mongoose
   .connect(process.env.URI, {
@@ -40,7 +40,7 @@ const addToDB = async () => {
     .map((current) => {
       return {
         name: current.__EMPTY_1,
-        phoneNumber: current.__EMPTY_3,
+        email: current.__EMPTY_2,
         password: 'tuteck-caf',
         coffee_Cup1: false,
         coffee_Cup2: false,

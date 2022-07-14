@@ -22,46 +22,47 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log('DB Connected');
-    console.log(`Server started on port ${process.env.PORT}`);
+    console.log(`DB Connected`);
+    console.log(`Server started`);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 
-  //   //Running a script everyday at 11 PM to clear the DB.
-  //   cron.schedule('* 0 23 * * *', async () => {
-  //     let condition = {};
-  //     let update = {
-  //       $set: {
-  //         coffee_Cup1: false,
-  //         coffee_Cup2: false,
-  //       },
-  //     };
-  //     let options = { multi: true };
+//Running a script everyday at 11 PM to clear the DB.
+cron.schedule('* 0 23 * * *', async () => {
+  let condition = {};
+  let update = {
+    $set: {
+      coffee_Cup1: false,
+      coffee_Cup2: false,
+    },
+  };
+  let options = { multi: true };
 
-  //     try {
-  //       await User.updateMany(condition, update, options);
-  //     } catch (error) {
-  //       console.log(error.message);
-  //       client.messages.create({
-  //         body: `DB update failed with ${error} ${error.message} `,
-  //         to: '+917980996735',
-  //         from,
-  //       });
-  //     }
-  //   });
+  try {
+    await User.updateMany(condition, update, options);
+  } catch (error) {
+    console.log(error.message);
+    client.messages.create({
+      body: `DB update failed with ${error} ${error.message} `,
+      to: '+917980996735',
+      from,
+    });
+    process.exit(1);
+  }
+});
 
-  //   //Running another script everyday at 7:30 PM to send a mail to Aritra Da on weekdays.
-  //   cron.schedule('* 30 19 * * 1-5', async () => {
-  //     transporter.sendMail(mailOptions, (error, response) => {
-  //       if (error) {
-  //         client.messages.create({
-  //           body: `Mailing failed to Aritra with ${error} ${error.message}`,
-  //           to: '+917980996735',
-  //           from,
-  //         });
-  //       }
-  //     });
-  //   });
-  // })
-  // .catch((error) => {
-  //   console.log(error);
-  //   process.exit(1);
-  // });
+// //Running another script everyday at 7:30 PM to send a mail to Aritra Da on weekdays.
+// cron.schedule('* 30 19 * * 1-5', async () => {
+//   transporter.sendMail(mailOptions, (error, response) => {
+//     if (error) {
+//       client.messages.create({
+//         body: `Mailing failed to Aritra with ${error} ${error.message}`,
+//         to: '+917980996735',
+//         from,
+//       });
+//       process.exit(1);
+//     }
+//   });
+// });
