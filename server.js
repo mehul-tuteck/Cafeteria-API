@@ -1,3 +1,4 @@
+
 require("dotenv").config();
 const express = require("express");
 const cron = require("node-cron");
@@ -7,7 +8,15 @@ const mongoose = require("mongoose");
 const router = require("./routes");
 const { transporter, mailOptions } = require("./mailConfig.js");
 
-const client = new twilio(process.env.SID, process.env.TOKEN);
+
+const sid = process.env.SID;
+const token = process.env.TOKEN;
+const from = process.env.FROM;
+
+const client = require('twilio')(
+  'ACa8ed8b0032c38e0d0417286903ea27ad',
+  'f56ff014b200c54de19bc8c838209e95'
+);
 
 const app = express();
 app.use(router);
@@ -27,8 +36,9 @@ mongoose
     process.exit(1);
   });
 
+
 //Running a script everyday at 11 PM to clear the DB.
-cron.schedule("* 0 23 * * *", async () => {
+cron.schedule('* 0 23 * * *', async () => {
   try {
     const users = await Users.findAll();
 
@@ -46,20 +56,20 @@ cron.schedule("* 0 23 * * *", async () => {
   } catch (error) {
     client.messages.create({
       body: `DB update failed with ${error.message}`,
-      to: "+917980996735",
-      from: process.env.FROM,
+      to: '+917980996735',
+      from,
     });
   }
 });
 
 //Running another script everyday at 7:30 PM to send a mail to Aritra Da on weekdays.
-cron.schedule("* 30 19 * * 1-5", async () => {
+cron.schedule('* 30 19 * * 1-5', async () => {
   transporter.sendMail(mailOptions, (error, response) => {
     if (error) {
       client.messages.create({
         body: `Mailing failed to Aritra with ${error}`,
-        to: "+917980996735",
-        from: process.env.FROM,
+        to: '+917980996735',
+        from,
       });
     }
   });
