@@ -1,12 +1,9 @@
 require("dotenv").config();
 const express = require("express");
 const cron = require("node-cron");
-const { sequelize, Sequelize } = require("sequelize");
-const nodemailer = require("nodemailer");
 const twilio = require("twilio");
+const mongoose = require("mongoose");
 
-const db = require("./dbSetup");
-const Users = require("./users")(db.sequelize, Sequelize);
 const router = require("./routes");
 const { transporter, mailOptions } = require("./mailConfig.js");
 
@@ -15,11 +12,20 @@ const client = new twilio(process.env.SID, process.env.TOKEN);
 const app = express();
 app.use(router);
 
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {
-  console.log("Database connected");
-  console.log(`Server started on port ${PORT}`);
-});
+mongoose
+  .connect(process.env.URI, {
+    useNewUrlParser: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("DB Connected");
+    console.log(`Server started on port ${process.env.PORT}`);
+  })
+  .catch((error) => {
+    console.log(error);
+    process.exit(1);
+  });
 
 //Running a script everyday at 11 PM to clear the DB.
 cron.schedule("* 0 23 * * *", async () => {
