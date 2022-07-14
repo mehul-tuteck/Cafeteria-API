@@ -14,6 +14,8 @@ const from = process.env.FROM;
 const client = require('twilio')(sid, token);
 
 const app = express();
+app.use(express.json());
+
 app.use('/', coffeeRoutes);
 
 mongoose
