@@ -35,6 +35,7 @@ const login = async (req, res, next) => {
     message: 'Successfully logged in',
     emoji: '(✿◠‿◠)',
     token,
+    name: userDetails.name,
   });
 };
 
@@ -47,14 +48,14 @@ const verify = async (req, res, next) => {
     if (!updateUser.coffeeCup_1) {
       response = await User.updateOne({ email }, { coffeeCup_1: true });
       return res.status(200).send({
-        message: 'Thanks for ordering your first cup for the day',
+        message: `Thanks ${updateUser.name} for ordering your first cup for the day`,
         emoji: '(ᵔᴥᵔ)',
         response,
       });
     } else if (!updateUser.coffeeCup_2) {
       response = await User.updateOne({ email }, { coffeeCup_2: true });
       return res.status(200).send({
-        message: 'Thanks for ordering your second cup for the day',
+        message: `Thanks ${updateUser.name} for ordering your second cup for the day`,
         emoji: '(ᵔᴥᵔ)',
         response,
       });
