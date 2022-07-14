@@ -27,12 +27,9 @@ const login = async (req, res, next) => {
     });
   }
 
-  const token = jwt.sign(
-    userDetails.email,
-    userDetails.password,
-    'tuteck-caf',
-    { expiresIn: '400d' }
-  );
+  const token = jwt.sign({ email, password }, 'tuteck-caf', {
+    expiresIn: '400d',
+  });
 
   return res.status(200).send({
     message: 'Successfully logged in',
