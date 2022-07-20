@@ -27,7 +27,8 @@ const login = async (req, res, next) => {
     });
   }
 
-  const token = jwt.sign({ email, password }, 'tuteck-caf', {
+  const name = userDetails.name
+  const token = jwt.sign({ email, name }, 'tuteck-caf', {
     expiresIn: '400d',
   });
 
