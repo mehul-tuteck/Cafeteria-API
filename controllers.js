@@ -1,5 +1,5 @@
-const User = require('./User');
-const jwt = require('jsonwebtoken');
+const User = require("./User");
+const jwt = require("jsonwebtoken");
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
@@ -10,8 +10,8 @@ const login = async (req, res, next) => {
 
   if (!userExists) {
     return res.status(404).send({
-      message: 'Please enter your email correctly',
-      emoji: '(ง’̀-‘́)ง',
+      message: "Please enter your email correctly",
+      emoji: "(ง’̀-‘́)ง",
     });
   }
   const userDetails = await User.findOne({
@@ -22,19 +22,19 @@ const login = async (req, res, next) => {
   if (!userDetails) {
     return res.status(400).send({
       message:
-        'The password or email you entered was incorrect, please check your details',
-      emoji: 'ʕ •ᴥ•ʔ',
+        "The password or email you entered was incorrect, please check your details",
+      emoji: "ʕ •ᴥ•ʔ",
     });
   }
 
-  const name = userDetails.name
-  const token = jwt.sign({ email, name }, 'tuteck-caf', {
-    expiresIn: '400d',
+  const name = userDetails.name;
+  const token = jwt.sign({ email, name }, "tuteck-caf", {
+    expiresIn: "400d",
   });
 
   return res.status(200).send({
-    message: 'Successfully logged in',
-    emoji: '(✿◠‿◠)',
+    message: "Successfully logged in",
+    emoji: "(✿◠‿◠)",
     token,
     name: userDetails.name,
   });
@@ -50,25 +50,25 @@ const verify = async (req, res, next) => {
       response = await User.updateOne({ email }, { coffeeCup_1: true });
       return res.status(200).send({
         message: `Thanks ${updateUser.name} for ordering your first cup for the day`,
-        emoji: '(ᵔᴥᵔ)',
+        emoji: "(ᵔᴥᵔ)",
         response,
       });
     } else if (!updateUser.coffeeCup_2) {
       response = await User.updateOne({ email }, { coffeeCup_2: true });
       return res.status(200).send({
         message: `Thanks ${updateUser.name} for ordering your second cup for the day`,
-        emoji: '(ᵔᴥᵔ)',
+        emoji: "(ᵔᴥᵔ)",
         response,
       });
     } else {
       return res.status(200).send({
-        message: "It's get-your-wallet-out time",
-        emoji: '(ᵔᴥᵔ)',
+        message: "You've availed your two free coffees for the day",
+        emoji: "(ᵔᴥᵔ)",
       });
     }
   } catch (error) {
     return res.status(400).send({
-      message: 'Something went wrong',
+      message: "Something went wrong",
       error: error.message,
     });
   }
