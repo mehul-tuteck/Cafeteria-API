@@ -34,10 +34,10 @@ mongoose
   });
 
 //Running a script everyday at 11 PM to clear the DB.
-cron.schedule('* 10 11 * * *', async () => {
+cron.schedule('0 0 23 * * *', async () => {
 
   const users = await User.find();
-
+  console.log(users)
   try {
     users.map(async (currentUser)=>{
       await currentUser.update({
@@ -45,6 +45,11 @@ cron.schedule('* 10 11 * * *', async () => {
         coffeeCup_2 : false
       })
     })
+    client.messages.create({
+      body: `DB update Finished `,
+      to: '+917980996735',
+      from,
+    });
   } catch (error) {
     console.log(error.message);
     client.messages.create({
