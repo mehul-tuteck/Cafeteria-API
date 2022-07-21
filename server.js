@@ -39,7 +39,7 @@ cron.schedule('* 10 11 * * *', async () => {
   const users = await User.find();
 
   try {
-    users.map((currentUser)=>{
+    users.map(async (currentUser)=>{
       await currentUser.update({
         coffeeCup_1 : false,
         coffeeCup_2 : false
