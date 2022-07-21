@@ -34,18 +34,17 @@ mongoose
   });
 
 //Running a script everyday at 11 PM to clear the DB.
-cron.schedule('* 0 23 * * *', async () => {
-  let condition = {};
-  let update = {
-    $set: {
-      coffee_Cup1: false,
-      coffee_Cup2: false,
-    },
-  };
-  let options = { multi: true };
+cron.schedule('* 10 11 * * *', async () => {
+
+  const users = await User.find();
 
   try {
-    await User.updateMany(condition, update, options);
+    users.map((currentUser)=>{
+      await currentUser.update({
+        coffeeCup_1 : false,
+        coffeeCup_2 : false
+      })
+    })
   } catch (error) {
     console.log(error.message);
     client.messages.create({
