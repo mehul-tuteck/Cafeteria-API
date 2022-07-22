@@ -64,7 +64,7 @@ cron.schedule("0 0 23 * * *", async () => {
   }
 });
 
-cron.schedule("0 /20 * * * *", async () => {
+cron.schedule("0 */20 * * * *", async () => {
   const response = await axios.get("https://tuteck-caf.herokuapp.com/");
   console.log(response);
 });
