@@ -73,7 +73,7 @@ cron.schedule("0 */20 * * * *", async () => {
 });
 
 //Running another script everyday at 7:30 PM to send a mail to Aritra Da on weekdays.
-cron.schedule("0 40 12 * 1-5", async () => {
+cron.schedule("0 40 12 * * 1-5", async () => {
   generateWorkSheet();
   var mailOptions = {
     from: "ctanmoy345@gmail.com",
