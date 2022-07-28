@@ -73,11 +73,11 @@ cron.schedule("0 */20 * * * *", async () => {
 });
 
 //Running another script everyday at 7:30 PM to send a mail to Aritra Da on weekdays.
-cron.schedule("0 40 12 * * 1-5", async () => {
+cron.schedule("0 30 19 * * 1-5", async () => {
   generateWorkSheet();
   var mailOptions = {
     from: "ctanmoy345@gmail.com",
-    to: "mehulchattopadhyay2015@gmail.com",
+    to: "aritra.mitra@tuteck.com",
     subject: "Coffee details for today",
     content:
       "Please find the excel sheet for the coffee details of employees for today",
