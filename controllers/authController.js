@@ -1,10 +1,9 @@
-const User = require("./User");
+const User = require("../models/User");
 const jwt = require("jsonwebtoken");
-
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
-
+  email = email.toLowerCase();
   const userExists = await User.findOne({
     email,
   });

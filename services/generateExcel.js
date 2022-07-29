@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const fs = require("fs");
 const moment = require("moment");
 const xlsx = require("xlsx");
-const User = require("./User");
+const User = require("../models/User");
 
 let workbook = xlsx.utils.book_new();
 const generateWorkSheet = async () => {

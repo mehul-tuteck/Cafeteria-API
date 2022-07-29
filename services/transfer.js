@@ -1,6 +1,6 @@
 require('dotenv').config();
 const reader = require('xlsx');
-const User = require('./User');
+const User = require('../models/User');
 const mongoose = require('mongoose');
 
 const file = reader.readFile('./test.xlsx');
