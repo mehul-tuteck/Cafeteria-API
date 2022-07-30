@@ -26,12 +26,11 @@ mongoose
     console.log(`DB Connected`);
     app.listen(process.env.PORT, () => {
       console.log(`Server started on port ${process.env.PORT}`);
+      pingToKeepAlive();
+      emailToAritra();
+      resetDB();
     });
   })
   .catch((error) => {
     console.log(error);
   });
-
-pingToKeepAlive();
-emailToAritra();
-resetDB();
