@@ -2,7 +2,7 @@ const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 
 const login = async (req, res, next) => {
-  const { email, password } = req.body;
+  let { email, password } = req.body;
   email = email.toLowerCase();
   const userExists = await User.findOne({
     email,
@@ -41,7 +41,8 @@ const login = async (req, res, next) => {
 };
 
 const verify = async (req, res, next) => {
-  const email = req.email;
+  let email = req.email;
+  email = email.toLowerCase();
   let response;
 
   try {
