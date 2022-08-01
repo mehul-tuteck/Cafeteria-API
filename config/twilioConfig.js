@@ -1,3 +1,4 @@
+require("dotenv").config();
 const sid = process.env.SID;
 const token = process.env.TOKEN;
 const from = process.env.FROM;

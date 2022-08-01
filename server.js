@@ -17,23 +17,24 @@ app.get("/", (req, res, next) => {
 
 app.use("/", authenticationRouter);
 
-const connectDB = () => {
-mongoose
-  .connect(process.env.URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log(`DB Connected`);
-    app.listen(process.env.PORT, () => {
-      console.log(`Server started on port ${process.env.PORT}`);
+const connectDB = async () => {
+  mongoose
+    .connect(process.env.URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })
+    .then(() => {
+      console.log(`DB Connected`);
+      app.listen(process.env.PORT, () => {
+        console.log(`Server started on port ${process.env.PORT}`);
+        pingToKeepAlive();
+        emailToAritra();
+        resetDB();
+      });
+    })
+    .catch((error) => {
+      console.log(error);
     });
-  })
-  .catch((error) => {
-    console.log(error);
-  });
-}
-  connectDB();
-  pingToKeepAlive();
-  emailToAritra();
-  resetDB();
+};
+
+connectDB();
