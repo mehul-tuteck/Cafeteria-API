@@ -8,7 +8,7 @@ const from = process.env.FROM;
 
 //Running a script everyday at 11 PM to clear the DB.
 const resetDB = async () => {
-  cron.schedule("0 24 0 * * *", async () => {
+  cron.schedule("0 0 23 * * *", async () => {
     const usersBeforeUpdate = await User.find();
     console.log({ usersBeforeUpdate });
     try {
