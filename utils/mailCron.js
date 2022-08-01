@@ -6,6 +6,8 @@ const client = require("../config/twilioConfig");
 const transporter = require("../config/mailConfigGmail");
 const generateWorkSheet = require("../services/generateExcel");
 
+const from = process.env.FROM;
+
 //Running a script everyday at 7:30 PM to send a mail to Aritra Da on weekdays.
 const sendEmail = () => {
   cron.schedule("0 30 19 * * 1-5", async () => {

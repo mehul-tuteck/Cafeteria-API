@@ -3,6 +3,8 @@ const cron = require("node-cron");
 const User = require("../models/User");
 const client = require("../config/twilioConfig");
 
+const from = process.env.FROM
+
 //Running a script everyday at 11 PM to clear the DB.
 const resetDB = () => {
   cron.schedule("0 0 23 * * *", async () => {
