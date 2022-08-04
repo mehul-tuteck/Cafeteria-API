@@ -21,6 +21,7 @@ const sendEmail = async () => {
           "aritra.mitra@tuteck.com",
           "mehulchattopadhyay2015@gmail.com",
            "tanmoy.chandra@tuteck.com",
+           "binayadak16@gmail.com"
         ],
         subject: "Coffee details for today",
         text: "Please find the excel sheet for the coffee details of employees for today",
